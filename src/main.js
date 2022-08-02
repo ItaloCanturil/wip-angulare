@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import Repository from '@/plugins/Repository'
 
+import '@/assets/styles/app.css'
+
 Vue.config.productionTip = false
 
 Vue.use(Repository)
