@@ -43,7 +43,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="user in users" :key="user" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <tr v-for="(user, index) in users" :key="user" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.id }}</td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     {{ user.username }}
@@ -62,7 +62,7 @@
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <button
-                      @click="deleteUser(user.id)"
+                      @click="deleteUser(index)"
                       class="bg-[#2cb67d] text-[#fffffe] p-1 ml-1 rounded-lg"
                     >
                       Deletar

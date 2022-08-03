@@ -34,7 +34,7 @@ const mutations = {
     window.localStorage.setItem('users', JSON.stringify(state.data))
   },
   DELETE_DATA (state, data) {
-    state.data.splice(data.userId - 1, 1)
+    state.data.splice(data.id, 1)
     window.localStorage.setItem('users', JSON.stringify(state.data))
   }
 }
