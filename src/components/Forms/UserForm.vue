@@ -2,7 +2,7 @@
   <form
     class="w-[25rem] flex flex-col items-center bg-white p-2 relative rounded"
   >
-    <div class="mb-6 w-full">
+    <div class="mb-5 w-full">
       <label class="block" for="username">Nome completo:</label>
       <input
         v-model="form.username"
@@ -27,7 +27,7 @@
         type="text"
       />
     </div>
-    <div class="mb-6 w-full">
+    <div class="mb-5 w-full">
       <label class="block" for="username">ID do usuário:</label>
       <input
         v-model="form.id"
@@ -52,9 +52,10 @@
         type="text"
       />
     </div>
-    <div class="mb-6 w-full">
+    <div class="mb-5 w-full">
       <label class="block" for="email">Email:</label>
       <input type="email"
+        placeholder="email@email.com"
         v-model="form.email"
         class="
           bg-gray-50
@@ -80,10 +81,12 @@
       />
       <span v-if="hasError.email.req" class="text-xs text-red-500">Email inválido</span>
     </div>
-    <div class="mb-6 w-full">
+    <div class="mb-5 w-full">
       <label class="block" for="date">Data de nascimento:</label>
       <input
         v-model="form.date"
+        v-mask="'##/##/####'"
+        placeholder="dd/mm/yyyy"
         class="
           bg-gray-50
           border border-gray-300
@@ -105,10 +108,11 @@
         type="text"
       />
     </div>
-    <div class="mb-6 w-full">
+    <div class="mb-5 w-full">
       <label class="block" for="phone">Telofone:</label>
       <input
         v-model="form.phone"
+        v-mask="['(##) ####-####', '(##) #####-####']"
         class="
           bg-gray-50
           border border-gray-300
@@ -129,14 +133,35 @@
         name="phone"
         type="text"
       />
-      <select name="gender" id="gender" v-model="form.gender">
+    </div>
+    <div class="mb-5 w-full">
+      <label class="block" for="gender">Genêro:</label>
+      <select class="s
+          bg-gray-50
+          border border-gray-300
+          text-gray-900 text-sm
+          rounded-lg
+          focus:ring-blue-500 focus:border-blue-500
+          block
+          w-full
+          p-2.5
+          dark:bg-gray-700
+          dark:border-gray-600
+          dark:placeholder-gray-400
+          dark:text-white
+          dark:focus:ring-blue-500
+          dark:focus:border-blue-500
+        " name="gender" id="gender" v-model="form.gender">
         <option value="Masculino">Masculino</option>
         <option value="Feminina">Feminina</option>
       </select>
+
     </div>
 
+    <span v-if="hasError.form" class="text-sm mb-4 text-red-500">Dados inválidos</span>
+
     <div class="flex">
-      <button @click.prevent="create(form)" class="bg-[#7f5af0] text-[#fffffe] p-1 rounded-lg mr-1">
+      <button @click.prevent="checkForm(form)" class="bg-[#7f5af0] text-[#fffffe] p-1 rounded-lg mr-1">
         Adicionar
       </button>
       <button
@@ -160,6 +185,7 @@ export default {
     return {
       loading: false,
       hasError: {
+        form: false,
         email: {
           req: false
         }
@@ -184,6 +210,15 @@ export default {
       create: 'users/create',
       edit: 'users/edit'
     }),
+
+    checkForm (user) {
+      if (!this.form.username && !this.form.email && !this.form.password && !this.form.phone && !this.form.gender && !this.form.id && !this.hasError.form) {
+        this.hasError.form = true
+        return
+      }
+      this.create(user)
+      this.$emit('close')
+    },
 
     async editUser (user) {
       try {
